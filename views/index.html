@@ -29,7 +29,7 @@
 					<div class="input-group">
 						<input name="keyword" type="text" class="form-control" placeholder="Filter by keyword">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="submit">Filter!</button>
+							<button class="btn btn-default" type="submit">Filter</button>
 						</span>
 					</div>
 					<!-- /input-group -->
@@ -63,7 +63,7 @@
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="trending-day">
 						<% trendings.day.forEach(function(pkg) { %>
-						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+						<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 							<button class="btn btn-danger" type="button">
 								<%=pkg._id%>
 								<span class="badge">
@@ -75,7 +75,7 @@
 					</div>
 					<div role="tabpanel" class="tab-pane" id="trending-week">
 						<% trendings.week.forEach(function(pkg) { %>
-						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+						<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 							<button class="btn btn-danger" type="button">
 								<%=pkg._id%>
 								<span class="badge">
@@ -86,8 +86,8 @@
 						<% }); %>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="trending-month">
-						<% trendings.day.forEach(function(pkg) { %>
-						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+						<% trendings.month.forEach(function(pkg) { %>
+						<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 							<button class="btn btn-danger" type="button">
 								<%=pkg._id%>
 								<span class="badge">
@@ -113,7 +113,7 @@
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="downloads-day">
 						<% downloads.day.forEach(function(pkg) { %>
-						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+						<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 							<button class="btn btn-primary" type="button">
 								<%=pkg._id%>
 								<span class="badge">
@@ -124,24 +124,24 @@
 						<% }); %>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="downloads-week">
-						<% downloads.day.forEach(function(pkg) { %>
-						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+						<% downloads.week.forEach(function(pkg) { %>
+						<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 							<button class="btn btn-primary" type="button">
 								<%=pkg._id%>
 								<span class="badge">
-									<%=pkg.downloads.day%>
+									<%=pkg.downloads.week%>
 								</span>
 							</button>
 						</a>
 						<% }); %>
 					</div>
 					<div role="tabpanel" class="tab-pane" id="downloads-month">
-						<% downloads.day.forEach(function(pkg) { %>
-						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+						<% downloads.month.forEach(function(pkg) { %>
+						<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 							<button class="btn btn-primary" type="button">
 								<%=pkg._id%>
 								<span class="badge">
-									<%=pkg.downloads.day%>
+									<%=pkg.downloads.month%>
 								</span>
 							</button>
 						</a>
@@ -155,7 +155,7 @@
 			<div class="col-md-6">
 				<h2>Most Depended Upon</h2>
 				<% depended.forEach(function(pkg) { %>
-				<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+				<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 					<button class="btn btn-success" type="button">
 						<%=pkg._id%>
 						<span class="badge">
@@ -189,6 +189,11 @@
 	<!-- /container -->
 	<script src="js/jquery-1.11.3.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('[data-toggle="tooltip"]').tooltip()
+		})
+	</script>
 
 </body>
 
