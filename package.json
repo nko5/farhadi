@@ -7,7 +7,8 @@
   "dependencies": {
     "express": "4.x.x",
     "mongojs": "^1.4.1",
-    "request": "^2.65.0"
+    "request": "^2.65.0",
+    "suspend": "^0.7.0"
   },
   "scripts": {
     "start": "node app.js",
