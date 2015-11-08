@@ -55,7 +55,10 @@ var getTrends = suspend.promise(function*(keyword) {
 
 var globalTrends = getTrends();
 setInterval(function() {
-	globalTrends = getTrends();
+	var trends = getTrends();
+	trends.then(function() {
+		globalTrends = trends;
+	});
 }, 86400000);
 
 //app.set('view engine', 'jade');
