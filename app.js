@@ -1,7 +1,7 @@
 var express = require('express'),
 	app = express(),
-	mongo = require('mongojs'),
-	db = mongo.db(process.env.MONGO_URI, {native_parser:true});
+	mongojs = require('mongojs'),
+	db = mongojs(process.env.MONGO_URI, ['packages'], {authMechanism: 'ScramSHA1'});
 	
 require('./crawler');
 
