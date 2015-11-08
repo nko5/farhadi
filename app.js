@@ -12,56 +12,62 @@ require('./crawler');
 app.engine('html', cons.underscore);
 app.set('view engine', 'html');
 
-var trends = suspend.promise(function*() {
-	return {
+var getTrends = suspend.promise(function*(keyword) {
+	var conditions = keyword ? {keywords: keyword} : {};
+	var trends = {
 		trendings: {
-			day: yield db.packages.find({}, {_id: 1, description: 1, downloads: 1})
+			day: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
 				.sort({"trends.day": -1})
 				.limit(50, suspend.resume()),
-			week: yield db.packages.find({}, {_id: 1, description: 1, downloads: 1})
+			week: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
 				.sort({"trends.week": -1})
 				.limit(50, suspend.resume()),
-			month: yield db.packages.find({}, {_id: 1, description: 1, downloads: 1})
+			month: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
 				.sort({"trends.month": -1})
 				.limit(50, suspend.resume())
 		},
 		downloads: {
-			day: yield db.packages.find({}, {_id: 1, description: 1, downloads: 1})
+			day: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
 				.sort({"downloads.day": -1})
 				.limit(50, suspend.resume()),
-			week: yield db.packages.find({}, {_id: 1, description: 1, downloads: 1})
+			week: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
 				.sort({"downloads.week": -1})
 				.limit(50, suspend.resume()),
-			month: yield db.packages.find({}, {_id: 1, description: 1, downloads: 1})
+			month: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
 				.sort({"downloads.month": -1})
 				.limit(50, suspend.resume())
 		},
-		depended: yield db.packages.find({}, {_id: 1, description: 1, dependents: 1})
+		depended: yield db.packages.find(conditions, {_id: 1, description: 1, dependents: 1})
 			.sort({"dependents": -1})
-			.limit(50, suspend.resume()),
-		keywords: yield db.packages.aggregate([
+			.limit(50, suspend.resume())
+	};
+	if (!keyword) {
+		trends.keywords = yield db.packages.aggregate([
 			{$unwind: "$keywords"},
 			{$group: {_id: "$keywords",count: {$sum: 1}}},
 			{$sort: {count: -1}},
 			{$limit: 50}
-		], suspend.resume()),
-	};
-})();
+		], suspend.resume());
+	}
+	return trends;
+});
+
+var globalTrends = getTrends();
+setInterval(function() {
+	globalTrends = getTrends();
+}, 86400000);
 
 //app.set('view engine', 'jade');
 //Create a static file server
 app.use(express.static(__dirname + '/public'));
 app.get('/', suspend(function*(req, res) {
-/*
-	db.packages.find({}, {_id:1, description:1}).sort({"downloads.day":-1}).limit(30, suspend.resume());
-	db.packages.find({}, {_id:1, description:1}).sort({"downloads.week":-1}).limit(30, suspend.resume());
-	db.packages.find({}, {_id:1, description:1}).sort({"downloads.month":-1}).limit(30, suspend.resume());
-	var topDownloads = {
-		day: yield 'day',
-		week: yield 'week',
-		month: yield 'month'
-	};*/
-	res.render('index', yield trends);
+	var data = yield globalTrends;
+	res.locals.keyword = req.query.keyword || '';
+	if (!req.query.keyword) {
+		return res.render('index', data);
+	}
+	res.locals.keywords = data.keywords;
+	res.render('index', yield getTrends(req.query.keyword));
 }));
 
 var port = 8080;
