@@ -3,7 +3,7 @@ var express = require('express'),
 	mongo = require('mongoskin'),
 	db = mongo.db(process.env.MONGO_URI, {native_parser:true});
 	
-
+require('./crawler');
 
 
 //Create a static file server
