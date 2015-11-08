@@ -1,7 +1,7 @@
 {
-  "name": "npm-explorer",
+  "name": "npm-trends",
   "version": "0.0.1",
-  "description": "NPM explorer that doesn't suck.",
+  "description": "An application to discover node.js packages.",
   "author": "Ali Farhadi <a.farhadi@gmail.com>",
   "main": "./app.js",
   "dependencies": {
