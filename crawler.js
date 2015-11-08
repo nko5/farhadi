@@ -1,6 +1,6 @@
 var mongojs = require('mongojs'),
 	suspend = require('suspend'),
-	db = mongojs(process.env.MONGO_URI, ['packages'], {authMechanism: 'ScramSHA1'}),
+	db = mongojs(process.env.MONGO_URL, ['packages'], {authMechanism: 'ScramSHA1'}),
 	request = require('request');
 
 var crawl = function() {

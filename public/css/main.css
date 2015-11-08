@@ -1,7 +1,7 @@
 .navbar-brand {
 	padding: 10px;
 	line-height: 65px;
-    height: 65px;
+	height: 65px;
 }
 .navbar-form {
 	padding: 7px 0;
@@ -13,5 +13,9 @@
 	font-weight: bold;
 }
 .jumbotron h1, .jumbotron h2 {
-    text-align: center;
+	text-align: center;
+}
+a.keyword {
+	padding: 5px;
+	line-height: 40px;
 }

@@ -5,10 +5,12 @@
   "author": "Ali Farhadi <a.farhadi@gmail.com>",
   "main": "./app.js",
   "dependencies": {
+    "consolidate": "^0.13.1",
     "express": "4.x.x",
     "mongojs": "^1.4.1",
     "request": "^2.65.0",
-    "suspend": "^0.7.0"
+    "suspend": "^0.7.0",
+    "underscore": "^1.8.3"
   },
   "scripts": {
     "start": "node app.js",

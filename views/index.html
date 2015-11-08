@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<title>NPM Trends</title>
+
+<head>
+	<link rel='stylesheet' type='text/css' href='css/bootstrap.min.css'>
+	<link rel='stylesheet' type='text/css' href='css/main.css'>
+</head>
+
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">
+					<img alt="npm-trends" src="img/npm-trends.png">
+				</a>
+				<a class="navbar-brand" href="#">
+					<iframe src="http://nodeknockout.com/iframe/farhadi" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+				</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<form class="navbar-form navbar-right" method="get">
+					<div class="input-group">
+						<input name="keyword" type="text" class="form-control" placeholder="Filter by keyword">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit">Filter!</button>
+						</span>
+					</div>
+					<!-- /input-group -->
+				</form>
+			</div>
+			<!--/.navbar-collapse -->
+		</div>
+	</nav>
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1>NPM Trends</h1>
+			<h2>Discover top and trending node.js packages</h2>
+		</div>
+	</div>
+
+	<div class="container">
+		<!-- Example row of columns -->
+		<div class="row">
+			<div class="col-md-6">
+				<h2>Trending</h2>
+				<ul class="nav nav-tabs nav-justified">
+					<li></li>
+				</ul>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#trending-day" aria-controls=trending- "day" role="tab" data-toggle="tab">Last Day</a></li>
+					<li role="presentation"><a href="#trending-week" aria-controls="trending-week" role="tab" data-toggle="tab">Last Week</a></li>
+					<li role="presentation"><a href="#trending-month" aria-controls="trending-month" role="tab" data-toggle="tab">Last Month</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="trending-day">
+						<table class="table table-striped">
+							<tr>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="trending-week">week</div>
+					<div role="tabpanel" class="tab-pane" id="trending-month">month</div>
+				</div>
+
+			</div>
+			<div class="col-md-6">
+				<h2>Top Downloads</h2>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#downloads-day" aria-controls="downloads-day" role="tab" data-toggle="tab">Last Day</a></li>
+					<li role="presentation"><a href="#downloads-week" aria-controls="downloads-week" role="tab" data-toggle="tab">Last Week</a></li>
+					<li role="presentation"><a href="#downloads-month" aria-controls="downloads-month" role="tab" data-toggle="tab">Last Month</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="downloads-day">day</div>
+					<div role="tabpanel" class="tab-pane" id="downloads-week">week</div>
+					<div role="tabpanel" class="tab-pane" id="downloads-month">month</div>
+				</div>
+
+			</div>
+			<div class="col-md-6">
+				<h2>Most Depended Upon</h2>
+			</div>
+			<div class="col-md-6">
+				<h2>Top Keywords</h2>
+				<% topKeywords.forEach(function(keyword) { %>
+				<a class="keyword" href="/?keyword=<%=keyword.keyword%>">
+					<button class="btn btn-primary" type="button">
+					<%=keyword.keyword%> <span class="badge"><%=keyword.count%></span>
+					</button>
+				</a>
+				<% }); %>
+			</div>
+		</div>
+
+		<hr>
+
+		<footer>
+			<p>&copy; Ali Farhadi</p>
+		</footer>
+	</div>
+	<!-- /container -->
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
