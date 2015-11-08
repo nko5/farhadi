@@ -1,4 +1,5 @@
 var express = require('express'),
+	_ = require('underscore'),
 	cons = require('consolidate'),
 	suspend = require('suspend'),
 	app = express(),
@@ -16,28 +17,28 @@ var getTrends = suspend.promise(function*(keyword) {
 	var conditions = keyword ? {keywords: keyword} : {};
 	var trends = {
 		trendings: {
-			day: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
+			day: yield db.packages.find(_.extend({'downloads.day': {$gt: 0}}, conditions), {_id: 1, description: 1, downloads: 1})
 				.sort({"trends.day": -1})
 				.limit(50, suspend.resume()),
-			week: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
+			week: yield db.packages.find(_.extend({'downloads.week': {$gt: 0}}, conditions), {_id: 1, description: 1, downloads: 1})
 				.sort({"trends.week": -1})
 				.limit(50, suspend.resume()),
-			month: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
+			month: yield db.packages.find(_.extend({'downloads.month': {$gt: 0}}, conditions), {_id: 1, description: 1, downloads: 1})
 				.sort({"trends.month": -1})
 				.limit(50, suspend.resume())
 		},
 		downloads: {
-			day: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
+			day: yield db.packages.find(_.extend({'downloads.day': {$gt: 0}}, conditions), {_id: 1, description: 1, downloads: 1})
 				.sort({"downloads.day": -1})
 				.limit(50, suspend.resume()),
-			week: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
+			week: yield db.packages.find(_.extend({'downloads.week': {$gt: 0}}, conditions), {_id: 1, description: 1, downloads: 1})
 				.sort({"downloads.week": -1})
 				.limit(50, suspend.resume()),
-			month: yield db.packages.find(conditions, {_id: 1, description: 1, downloads: 1})
+			month: yield db.packages.find(_.extend({'downloads.month': {$gt: 0}}, conditions), {_id: 1, description: 1, downloads: 1})
 				.sort({"downloads.month": -1})
 				.limit(50, suspend.resume())
 		},
-		depended: yield db.packages.find(conditions, {_id: 1, description: 1, dependents: 1})
+		depended: yield db.packages.find(_.extend({dependents: {$exists: 1}}, conditions), {_id: 1, description: 1, dependents: 1})
 			.sort({"dependents": -1})
 			.limit(50, suspend.resume())
 	};

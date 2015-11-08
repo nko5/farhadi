@@ -17,7 +17,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">
+				<a class="navbar-brand" href="/#">
 					<img alt="npm-trends" src="img/npm-trends.png">
 				</a>
 				<a class="navbar-brand" href="#">
@@ -50,7 +50,7 @@
 		<!-- Example row of columns -->
 		<div class="row">
 			<div class="col-md-6">
-				<h2>Trending Packages</h2>
+				<h2>Trending Packages<% if (keyword) { %> <span class="badge"><%=keyword%></span><% } %></h2>
 
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
@@ -101,7 +101,7 @@
 
 			</div>
 			<div class="col-md-6">
-				<h2>Top Downloads</h2>
+				<h2>Top Downloads<% if (keyword) { %> <span class="badge"><%=keyword%></span><% } %></h2>
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#downloads-day" aria-controls="downloads-day" role="tab" data-toggle="tab">Last Day</a></li>
@@ -153,7 +153,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<h2>Most Depended Upon</h2>
+				<h2>Most Depended Upon<% if (keyword) { %> <span class="badge"><%=keyword%></span><% } %></h2>
 				<% depended.forEach(function(pkg) { %>
 				<a data-toggle="tooltip" title="<%=pkg.description%>" class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
 					<button class="btn btn-success" type="button">
