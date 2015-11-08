@@ -1,7 +1,7 @@
 {
   "name": "npm-trends",
   "version": "0.0.1",
-  "description": "An application to discover node.js packages.",
+  "description": "An application to discover top and trending node.js packages",
   "author": "Ali Farhadi <a.farhadi@gmail.com>",
   "main": "./app.js",
   "dependencies": {
