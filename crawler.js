@@ -25,7 +25,11 @@ var crawl = function() {
 	};
 	
 	var lastDay = formatDate(new Date(Date.now() - 86400000));
+	var last2Day = formatDate(new Date(Date.now() - 86400000 * 2));
 	var lastWeek = formatDate(new Date(Date.now() - 86400000 * 7));
+	var last2Week = formatDate(new Date(Date.now() - 86400000 * 14));
+	var lastMonth = formatDate(new Date(Date.now() - 86400000 * 30));
+	var last2Month = formatDate(new Date(Date.now() - 86400000 * 60));
 
 	db.packages.find({}, {_id:1, downloads:1}, suspend(function*(error, docs) {
 		if (error) {
@@ -33,7 +37,7 @@ var crawl = function() {
 		}
 		for (var i = 0; i < docs.length; i++) {
 			request({
-				url: 'https://api.npmjs.org/downloads/range/last-month/' + docs[i]._id,
+				url: 'https://api.npmjs.org/downloads/range/' + last2Month + ':' + lastDay+ '/' + docs[i]._id,
 				json: true
 			}, function(fork, error, response, body) {
 				if (error || response.statusCode != 200) {
@@ -53,7 +57,7 @@ var crawl = function() {
 				}
 				if (!result.data.downloads) {
 					if (result.doc.downloads) {
-						db.packages.update({_id: result.doc._id}, {$unset: {downloads: ''}});
+						db.packages.update({_id: result.doc._id}, {$unset: {downloads: '', trends: ''}});
 					}
 					return;
 				}
@@ -62,21 +66,41 @@ var crawl = function() {
 					week: 0,
 					month: 0
 				};
+				var tmpDownloads = {
+					day: 10,
+					week: 10,
+					month: 10
+				};
 				result.data.downloads.forEach(function(item) {
-					downloads.month += item.downloads;
 					if (item.day == lastDay) {
 						downloads.day = item.downloads;
 					} 
 					if (item.day >= lastWeek) {
 						downloads.week += item.downloads;
 					}
+					if (item.day >= lastMonth) {
+						downloads.month += item.downloads;
+					}
+					if (item.day == last2Day) {
+						tmpDownloads.day += item.downloads;
+					} 
+					if (item.day >= last2Week && item.day < lastWeek) {
+						tmpDownloads.week += item.downloads;
+					}
+					if (item.day >= last2Month && item.day < lastMonth) {
+						tmpDownloads.month += item.downloads;
+					}
 				});
-				db.packages.update({_id: result.doc._id}, {$set: {downloads: downloads}});
+				var trends = {
+					day: downloads.day / tmpDownloads.day,
+					week: downloads.week / tmpDownloads.week,
+					month: downloads.month / tmpDownloads.month,
+				};
+				db.packages.update({_id: result.doc._id}, {$set: {downloads: downloads, trends: trends}});
 			});
 		}
 	}));
 };
 
 
-crawl();
 setInterval(crawl, 86400000);

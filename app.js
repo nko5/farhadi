@@ -1,6 +1,6 @@
 var express = require('express'),
 	app = express(),
-	mongo = require('mongoskin'),
+	mongo = require('mongojs'),
 	db = mongo.db(process.env.MONGO_URI, {native_parser:true});
 	
 require('./crawler');
