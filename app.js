@@ -53,12 +53,14 @@ var getTrends = suspend.promise(function*(keyword) {
 	return trends;
 });
 
+var trendsByKeyword = {};
 var globalTrends = getTrends();
 setInterval(function() {
 	var trends = getTrends();
 	trends.then(function() {
 		globalTrends = trends;
 	});
+	trendsByKeyword = {};
 }, 86400000);
 
 //app.set('view engine', 'jade');
@@ -71,7 +73,10 @@ app.get('/', suspend(function*(req, res) {
 		return res.render('index', data);
 	}
 	res.locals.keywords = data.keywords;
-	res.render('index', yield getTrends(req.query.keyword));
+	if (!trendsByKeyword[req.query.keyword]) {
+		trendsByKeyword[req.query.keyword] = yield getTrends(req.query.keyword);
+	}
+	res.render('index', trendsByKeyword[req.query.keyword]);
 }));
 
 var port = 8080;
