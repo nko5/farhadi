@@ -50,10 +50,8 @@
 		<!-- Example row of columns -->
 		<div class="row">
 			<div class="col-md-6">
-				<h2>Trending</h2>
-				<ul class="nav nav-tabs nav-justified">
-					<li></li>
-				</ul>
+				<h2>Trending Packages</h2>
+
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#trending-day" aria-controls=trending- "day" role="tab" data-toggle="tab">Last Day</a></li>
@@ -64,17 +62,41 @@
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="trending-day">
-						<table class="table table-striped">
-							<tr>
-								<td>
-								</td>
-								<td>
-								</td>
-							</tr>
-						</table>
+						<% trendings.day.forEach(function(pkg) { %>
+						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+							<button class="btn btn-danger" type="button">
+								<%=pkg._id%>
+								<span class="badge">
+									<%=pkg.downloads.day%>
+								</span>
+							</button>
+						</a>
+						<% }); %>
 					</div>
-					<div role="tabpanel" class="tab-pane" id="trending-week">week</div>
-					<div role="tabpanel" class="tab-pane" id="trending-month">month</div>
+					<div role="tabpanel" class="tab-pane" id="trending-week">
+						<% trendings.week.forEach(function(pkg) { %>
+						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+							<button class="btn btn-danger" type="button">
+								<%=pkg._id%>
+								<span class="badge">
+									<%=pkg.downloads.week%>
+								</span>
+							</button>
+						</a>
+						<% }); %>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="trending-month">
+						<% trendings.day.forEach(function(pkg) { %>
+						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+							<button class="btn btn-danger" type="button">
+								<%=pkg._id%>
+								<span class="badge">
+									<%=pkg.downloads.month%>
+								</span>
+							</button>
+						</a>
+						<% }); %>
+					</div>
 				</div>
 
 			</div>
@@ -89,21 +111,69 @@
 
 				<!-- Tab panes -->
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="downloads-day">day</div>
-					<div role="tabpanel" class="tab-pane" id="downloads-week">week</div>
-					<div role="tabpanel" class="tab-pane" id="downloads-month">month</div>
+					<div role="tabpanel" class="tab-pane active" id="downloads-day">
+						<% downloads.day.forEach(function(pkg) { %>
+						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+							<button class="btn btn-primary" type="button">
+								<%=pkg._id%>
+								<span class="badge">
+									<%=pkg.downloads.day%>
+								</span>
+							</button>
+						</a>
+						<% }); %>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="downloads-week">
+						<% downloads.day.forEach(function(pkg) { %>
+						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+							<button class="btn btn-primary" type="button">
+								<%=pkg._id%>
+								<span class="badge">
+									<%=pkg.downloads.day%>
+								</span>
+							</button>
+						</a>
+						<% }); %>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="downloads-month">
+						<% downloads.day.forEach(function(pkg) { %>
+						<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+							<button class="btn btn-primary" type="button">
+								<%=pkg._id%>
+								<span class="badge">
+									<%=pkg.downloads.day%>
+								</span>
+							</button>
+						</a>
+						<% }); %>
+					</div>
 				</div>
 
 			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-6">
 				<h2>Most Depended Upon</h2>
+				<% depended.forEach(function(pkg) { %>
+				<a class="keyword" href="https://npmjs.org/package/<%=pkg._id%>">
+					<button class="btn btn-success" type="button">
+						<%=pkg._id%>
+						<span class="badge">
+							<%=pkg.dependents%>
+						</span>
+					</button>
+				</a>
+				<% }); %>
 			</div>
 			<div class="col-md-6">
 				<h2>Top Keywords</h2>
-				<% topKeywords.forEach(function(keyword) { %>
-				<a class="keyword" href="/?keyword=<%=keyword.keyword%>">
-					<button class="btn btn-primary" type="button">
-					<%=keyword.keyword%> <span class="badge"><%=keyword.count%></span>
+				<% keywords.forEach(function(keyword) { %>
+				<a class="keyword" href="/?keyword=<%=keyword._id%>">
+					<button class="btn btn-info" type="button">
+						<%=keyword._id%>
+						<span class="badge">
+							<%=keyword.count%>
+						</span>
 					</button>
 				</a>
 				<% }); %>
